@@ -1,4 +1,5 @@
 from numpy.typing import NDArray
+from typing import List
 import numpy as np 
 import cvxpy as cp
 
@@ -11,8 +12,9 @@ import cvxpy as cp
     6) Z: Z's shape (cluster_num, cluster_siez[i], fp_num)
     7) summation: eq6's summation
     8) contraints: List of constraints 
+    9) lbda: eq6's lambda
 """
-def cvx_solver(C: NDArray, X: NDArray, fp_num: int) -> NDArray:    
+def cvx_solver(C: List, X: NDArray, fp_num: int, lbda: int) -> NDArray:    
     # parameters configuration:
     cluster_size = [len(c) for c in C]
     cluster_num = len(C)
@@ -20,7 +22,7 @@ def cvx_solver(C: NDArray, X: NDArray, fp_num: int) -> NDArray:
     Z = [cp.Variable((cluster_size[i], fp_num)) for i in range(cluster_num)]
     theta = np.ones((cluster_num))
     summation = 0 
-    constraints = [W >= 0, W <= 1, cp.mixed_norm(W, 2, 1) <= 1]
+    constraints = [W >= 0, W <= 1, cp.mixed_norm(W, 2, 1) <= lbda]
     # sigma(sigma(theta(z * X.T)))
     for i in range(cluster_num):
         for ak in range(cluster_size[i]):
