@@ -1,48 +1,77 @@
 from datetime import date
+from typing import Tuple
+
+import numpy as np
+import pandas as pd
+from scipy.io import loadmat
 from sklearn.datasets import load_iris
 from sklearn.ensemble import IsolationForest
-from typing import Tuple
-from numpy.typing import NDArray
-import scipy.io
-import pandas as pd 
-import numpy as np 
 
-# Air quality dataset 
-def read_airquality(filename: str) -> Tuple[NDArray, NDArray, NDArray]:
+__all__ = [
+    'read_airquality',
+    'read_iris',
+    'read_matfile',
+    'read_dataset'
+]
+
+
+Dataset = np.ndarray
+InliersIndex = np.ndarray
+OutliersIndex = np.ndarray
+
+
+def read_airquality(filename: str) -> Tuple[Dataset, OutliersIndex, InliersIndex]:
+    '''
+    Air quality dataset
+    '''
     df = pd.read_csv(filename)
-    date_list = df['Date'].values 
+    date_list = df['Date'].values
     time_list = df['Time'].values
     # data preprocess
     for index in range(len(date_list)):
         temp = date_list[index].split('/')
         temp2 = time_list[index].split(':')
-        x = date(int(temp[2]),int(temp[1]),int(temp[0]))
+        x = date(int(temp[2]), int(temp[1]), int(temp[0]))
         date_list[index] = x.toordinal()
         time_list[index] = temp2[0]
-    data = df.values 
-    # outlier detector 
+    data = df.values
+    # outlier detector
     clf = IsolationForest(n_estimators=30, random_state=10101)
     pred = clf.fit_predict(data)
     inlier_index = np.where(pred[:] == 1)[0]
     outlier_index = np.where(pred[:] == -1)[0]
     return data, outlier_index, inlier_index
 
-# Iris dataset 
-def read_iris() -> Tuple[NDArray, NDArray, NDArray]:
+
+def read_iris() -> Tuple[Dataset, OutliersIndex, InliersIndex]:
+    '''
+    Iris dataset
+    '''
     data = load_iris()['data']
-    # outlier detector 
+    # outlier detector
     clf = IsolationForest(max_samples=0.5, max_features=1.0, random_state=5)
-    pred = clf.fit_predict(data) # -1 represent outlier
+    pred = clf.fit_predict(data)  # -1 represent outlier
     inlier_index = np.where(pred[:] == 1)[0]
     outlier_index = np.where(pred[:] == -1)[0]
     return data, outlier_index, inlier_index
 
-# Others dataset (breastw、pendigits、mammography、annthyroid)
-def read_matfile(filename: str) -> Tuple[NDArray, NDArray, NDArray]:
-    mat = scipy.io.loadmat(filename)
+
+def read_matfile(filename: str) -> Tuple[Dataset, OutliersIndex, InliersIndex]:
+    '''
+    Others dataset (breastw、pendigits、mammography、annthyroid)
+    '''
+    mat = loadmat(filename)
     data, label = mat['X'], mat['y']
     inlier_index = np.where(label[:, 0] == 0)[0]
     outlier_index = np.where(label[:, 0] == 1)[0]
     return data, outlier_index, inlier_index
 
 
+def read_dataset(name: str) -> Tuple[Dataset, OutliersIndex, InliersIndex]:
+    lower_name = name.lower()
+    if lower_name == 'iris':
+        return read_iris()
+    elif lower_name == 'aq' or lower_name == 'airquality':
+        return read_airquality()
+    else:
+        return read_matfile(name)
