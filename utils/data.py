@@ -20,11 +20,11 @@ InliersIndex = np.ndarray
 OutliersIndex = np.ndarray
 
 
-def read_airquality(filename: str) -> Tuple[Dataset, OutliersIndex, InliersIndex]:
+def read_airquality() -> Tuple[Dataset, OutliersIndex, InliersIndex]:
     '''
     Air quality dataset
     '''
-    df = pd.read_csv(filename)
+    df = pd.read_csv('dataset/AirQualityUCI_req.csv')
     date_list = df['Date'].values
     time_list = df['Time'].values
     # data preprocess
