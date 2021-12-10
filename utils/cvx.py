@@ -22,7 +22,9 @@ def cvx_solver(C: List, X: NDArray, fp_num: int, lbda: int) -> NDArray:
     Z = [cp.Variable((cluster_size[i], fp_num)) for i in range(cluster_num)]
     theta = np.ones((cluster_num))
     summation = 0 
-    constraints = [W >= 0, W <= 1, cp.mixed_norm(W, 2, 1) <= lbda]
+    zeros = np.zeros((fp_num, cluster_num))
+    ones = np.ones((fp_num, cluster_num))
+    constraints = [W >= zeros, W <= ones, cp.mixed_norm(W, 2, 1) <= lbda]
     # sigma(sigma(theta(z * X.T)))
     for i in range(cluster_num):
         for ak in range(cluster_size[i]):

@@ -11,7 +11,8 @@ __all__ = [
     'read_airquality',
     'read_iris',
     'read_matfile',
-    'read_dataset'
+    'read_dataset',
+    'create_df'
 ]
 
 
@@ -19,6 +20,14 @@ Dataset = np.ndarray
 InliersIndex = np.ndarray
 OutliersIndex = np.ndarray
 
+def create_df(outliers: np.ndarray, inliers: np.ndarray, index: np.ndarray) -> pd.DataFrame:
+    column_names = ['attr_' + str(i) for i in range(outliers.shape[1])]
+    column_names.append('label')
+    cluster_outliers = outliers[index]
+    cluster_outliers = np.concatenate((cluster_outliers, np.ones((cluster_outliers.shape[0], 1))), axis=1)
+    inliers = np.concatenate((inliers, np.zeros((inliers.shape[0], 1))), axis=1)
+    df = pd.DataFrame(np.concatenate((inliers, cluster_outliers), axis=0), columns=column_names)
+    return df  
 
 def read_airquality() -> Tuple[Dataset, OutliersIndex, InliersIndex]:
     '''
