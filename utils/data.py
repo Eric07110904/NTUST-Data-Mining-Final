@@ -41,11 +41,11 @@ def read_airquality() -> Tuple[Dataset, OutliersIndex, InliersIndex]:
         temp = date_list[index].split('/')
         temp2 = time_list[index].split(':')
         x = date(int(temp[2]), int(temp[1]), int(temp[0]))
-        date_list[index] = x.toordinal()
-        time_list[index] = temp2[0]
+        date_list[index] = int(x.toordinal())
+        time_list[index] = int(temp2[0])
     data = df.values
     # outlier detector
-    clf = IsolationForest(n_estimators=30, random_state=10101)
+    clf = IsolationForest(n_estimators=20, random_state=10101)
     pred = clf.fit_predict(data)
     inlier_index = np.where(pred[:] == 1)[0]
     outlier_index = np.where(pred[:] == -1)[0]
