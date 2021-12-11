@@ -1,8 +1,10 @@
-from typing import Tuple, List
+from copy import deepcopy
+from typing import List, Tuple
+
 import networkx as nx
 import numpy as np
 from node2vec import Node2Vec
-from copy import deepcopy
+
 __all__ = [
     'generate_X_SQ',
     'generate_graph',

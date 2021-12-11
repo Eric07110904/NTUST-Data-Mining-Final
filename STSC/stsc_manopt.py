@@ -1,6 +1,6 @@
 from autograd import numpy as npy
-from pymanopt.manifolds import Stiefel
 from pymanopt import Problem
+from pymanopt.manifolds import Stiefel
 from pymanopt.solvers import SteepestDescent
 
 

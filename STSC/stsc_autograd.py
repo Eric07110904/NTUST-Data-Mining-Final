@@ -1,7 +1,8 @@
-from autograd import numpy as npy
 from functools import reduce
-from scipy.optimize import minimize
+
 from autograd import grad
+from autograd import numpy as npy
+from scipy.optimize import minimize
 
 
 def generate_Givens_rotation(i, j, theta, size):
