@@ -19,7 +19,13 @@ def cvx_solver(C: List, X: NDArray, fp_num: int, lbda: int) -> NDArray:
     cluster_size = [len(c) for c in C]
     cluster_num = len(C)
     W = cp.Variable((fp_num, cluster_num))
-    Z = [cp.Variable((cluster_size[i], fp_num)) for i in range(cluster_num)]
+    #Z = [cp.Variable((cluster_size[i], fp_num)) for i in range(cluster_num)]
+    
+    Z = [[] for i in range(cluster_num)]
+    for i in range(cluster_num):
+        for j in range(cluster_size[i]):
+            Z[i].append(W[:, i])
+    
     theta = np.ones((cluster_num))
     summation = 0 
     zeros = np.zeros((fp_num, cluster_num))
