@@ -1,0 +1,9 @@
+autograd
+cvxpy
+node2vec
+pandas
+pymanopt
+networkx
+scikit-learn
+scipy
+numpy

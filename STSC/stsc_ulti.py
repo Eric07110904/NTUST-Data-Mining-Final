@@ -1,5 +1,6 @@
-import numpy as np
 from itertools import groupby
+
+import numpy as np
 from scipy.linalg import eigh, inv, sqrtm
 
 
