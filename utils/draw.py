@@ -5,7 +5,8 @@ from typing import List
 __all__ = [
     'draw_heatmap',
     'draw_scatter',
-    'get_clusters_fps'
+    'get_clusters_fps',
+    'bar_chart'
 ]
 
 '''
@@ -31,4 +32,19 @@ def get_clusters_fps(W_t: np.ndarray, fp_record: List) -> List:
         for j in np.argsort(W_t[i])[-1:]: #取weight前n高的fp
             cluster_fp[i].insert(0, [fp_record[j][0], fp_record[j][1]])
     return cluster_fp
+
+def bar_chart(lambda_1: np.ndarray, lambda_10: np.ndarray):
+    size = len(lambda_10)
+    y10 = np.array([1+i*3 for i in range(size)])
+    y1 = np.array([2+i*3 for i in range(size)])
+    plt.bar(y1 , lambda_1[:,1] , width=1, label="Global", color="orange")
+    plt.bar(y10, lambda_10[:,1], width=1, label="Local", color="blue")
+    plt.ylabel("Incrimination(%)") # y label
+    plt.xlabel("Clusters") # x label
+    plt.legend()
+
+    temp = np.array([1.5+i*3 for i in range(size)])
+    strTemp = np.array(["c"+str(i) for i in range(size)])
+    plt.xticks(temp, strTemp)
+    plt.show()
 

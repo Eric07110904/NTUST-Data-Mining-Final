@@ -31,6 +31,8 @@ def get_incrimination(C: list, X: np.ndarray, n: int, W_t: np.ndarray, fp_num):
     for i in range(W_t.shape[0]):
         max_index.append(np.argsort(W_t[i])[-fp_num:])
     max_index = np.array(max_index)
+    oss_fp_j_j_weights = []
+    oss_fp_j_j_normals = []
     for index ,clu_i in enumerate(C):
         oss_fp_j_j_weight = []
         oss_fp_j_j_normal = []
@@ -43,3 +45,6 @@ def get_incrimination(C: list, X: np.ndarray, n: int, W_t: np.ndarray, fp_num):
         print("------------------")
         print(oss_fp_j_j_weight)
         print(oss_fp_j_j_normal)
+        oss_fp_j_j_weights.append(oss_fp_j_j_weight)
+        oss_fp_j_j_normals.append(oss_fp_j_j_normal)
+    return np.array(oss_fp_j_j_weights), np.array(oss_fp_j_j_normals)
