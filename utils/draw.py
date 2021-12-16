@@ -1,12 +1,14 @@
 import seaborn as sns; sns.set_theme()
 import matplotlib.pyplot as plt 
 import numpy as np 
+import pandas as pd 
 from typing import List
 __all__ = [
     'draw_heatmap',
     'draw_scatter',
     'get_clusters_fps',
-    'bar_chart'
+    'draw_barchart',
+    'draw_boxplot'
 ]
 
 '''
@@ -33,7 +35,7 @@ def get_clusters_fps(W_t: np.ndarray, fp_record: List) -> List:
             cluster_fp[i].insert(0, [fp_record[j][0], fp_record[j][1]])
     return cluster_fp
 
-def bar_chart(lambda_1: np.ndarray, lambda_10: np.ndarray):
+def draw_barchart(lambda_1: np.ndarray, lambda_10: np.ndarray) -> None:
     size = len(lambda_10)
     y10 = np.array([1+i*3 for i in range(size)])
     y1 = np.array([2+i*3 for i in range(size)])
@@ -42,9 +44,25 @@ def bar_chart(lambda_1: np.ndarray, lambda_10: np.ndarray):
     plt.ylabel("Incrimination(%)") # y label
     plt.xlabel("Clusters") # x label
     plt.legend()
-
     temp = np.array([1.5+i*3 for i in range(size)])
-    strTemp = np.array(["c"+str(i) for i in range(size)])
+    strTemp = np.array(["c"+str(i+1) for i in range(size)])
     plt.xticks(temp, strTemp)
     plt.show()
-
+    
+def draw_boxplot(dataset: List) -> None: 
+    dataset_name = ['AQ', 'IR', 'BR', 'MA', 'AN', 'PE']
+    column_name = ['first feature pairs', 'first two feature pairs', 'first three feature pairs', 'dataset']
+    df_list = []
+    for index, dataset in enumerate(dataset):
+        name = np.array([dataset_name[index] for i in range(len(dataset))]).reshape(-1, 1)
+        temp = np.concatenate((np.array(dataset), name), axis=1)
+        df_list.append(temp)
+    df = pd.DataFrame(np.concatenate(df_list,axis=0), columns=column_name)
+    df = pd.melt(df, id_vars=['dataset'], value_vars=['first feature pairs', 'first two feature pairs', 'first three feature pairs',], var_name='fp_num')
+    df = df.explode('value')
+    df['value'] = df['value'].astype('float')
+    plt.figure(figsize = (13,7))
+    ax = sns.boxplot(x='dataset', y='value', data=df, hue='fp_num')
+    ax.set_ylim(0.2,1)
+    ax.set_ylabel('Incrimination(%)')
+    ax.set_xlabel('Datasets')

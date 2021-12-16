@@ -12,7 +12,8 @@ __all__ = [
     'read_iris',
     'read_matfile',
     'read_dataset',
-    'create_df'
+    'create_df',
+    'save_W'
 ]
 
 
@@ -84,3 +85,7 @@ def read_dataset(name: str) -> Tuple[Dataset, OutliersIndex, InliersIndex]:
         return read_airquality()
     else:
         return read_matfile(name)
+
+
+def save_W(data: np.ndarray, dataset_name: str) -> None:
+    np.save("./weights/W/weight_{}".format(dataset_name), data)
