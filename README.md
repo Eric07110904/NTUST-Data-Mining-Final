@@ -22,7 +22,7 @@ Implementation of *LP-Explain_Local_Pictorial_Explanation_for_Outliers* (https:/
 
 
 因為程式執行需花很長時間，所以**我們有提供所有執行完成的jupyter notebook (.ipynb)。**
-方便助教在裡面看過程、執行成果圖。
+方便助教在裡面看過程、執行成果圖。 (放在/demo_notebooks/ 目錄下)
 
 1. [airquality_demo.ipynb](./demo_notebooks/airquality_demo.ipynb)
 2. [annthyroid_demo.ipynb](./demo_notebooks/annthyroid_demo.ipynb)
@@ -64,5 +64,7 @@ x軸為feature pair編號
 ![Cluster1](./image/pendigit_barchart.png)
 
 ### Incrimination chart2 (six datasets)
+
+[如何畫出這張圖](./demo_notebooks/draw.ipynb)
 
 ![Cluster1](./image/datasets_incrimination.png)
