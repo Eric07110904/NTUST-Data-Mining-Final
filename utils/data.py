@@ -87,5 +87,5 @@ def read_dataset(name: str) -> Tuple[Dataset, OutliersIndex, InliersIndex]:
         return read_matfile(name)
 
 
-def save_W(data: np.ndarray, dataset_name: str) -> None:
-    np.save("./weights/W/weight_{}".format(dataset_name), data)
+def save_W(data: np.ndarray, filepath: str, dataset_name: str) -> None:
+    np.save(filepath + "weight_{}".format(dataset_name), data)
