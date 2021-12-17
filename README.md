@@ -12,7 +12,7 @@ Implementation of *LP-Explain_Local_Pictorial_Explanation_for_Outliers* (https:/
 
 ## Usage
 
-This paper provide **six different datasets.**
+這篇paper提供6種資料集，下載連結如下
 1. airquality ([link](https://archive.ics.uci.edu/ml/datasets/Air+quality))
 2. iris ([link](https://archive.ics.uci.edu/ml/datasets/Iris))
 3. annthyroid ([link](http://odds.cs.stonybrook.edu/annthyroid-dataset/)) 
@@ -20,31 +20,34 @@ This paper provide **six different datasets.**
 5. mammograph ([link](http://odds.cs.stonybrook.edu/mammography-dataset/))
 6. pendigits ([link](http://odds.cs.stonybrook.edu/pendigits-dataset/))
 
-```shell=
-python3 example.py -d <DATASET_NAME>
-```
 
-```shell=
-python3 example.py -d pendigits
-```
+因為程式執行需花很長時間，所以**我們有提供所有執行完成的jupyter notebook (.ipynb)。**
+方便助教在裡面看過程、執行成果圖。
 
-因為程式執行需花很長時間，所以**我們有提供已執行完畢的jupyter notebook (.ipynb)。**
-方便在裡面看執行成果圖。
-
-[Jupyter notebook link](./demo_notebooks)
-
-## Experiment setting 
+1. [airquality_demo.ipynb](./demo_notebooks/airquality_demo.ipynb)
+2. [annthyroid_demo.ipynb](./demo_notebooks/annthyroid_demo.ipynb)
+3. [breastw_demo.ipynb](./demo_notebooks/breastw_demo.ipynb)
+4. [iris_demo.ipynb](./demo_notebooks/iris_demo.ipynb)
+5. [mammograph_demo.ipynb](./demo_notebooks/mammograph_demo.ipynb)
+6. [pendigit_demo.ipynb](./demo_notebooks/pendigit_demo.ipynb)
 
 
-## Experiment result ( pendigits dataset、$\lambda = 3$)
+## Experiment result ( pendigits dataset、lambda = 3)
 
 ### Heatmap plot 
 
-This heatmap plot is used for feature pairs selection.
+y軸為cluster數量
+
+x軸為feature pair編號
+
+從這張圖中挑選Weight最高的feaute pairs 
+
 
 ![lambda3 heatmap](./image/pendigit_3_heatmap.png)
 
 ### Scatter plot
+
+會為不同cluster的outlier，選擇不同的feature pair來解釋
 
 ![Cluster1](./image/pendigit_3_cluster1.png)
 
@@ -59,3 +62,7 @@ This heatmap plot is used for feature pairs selection.
 ### Incrimination chart (Global、Local feature pairs)
 
 ![Cluster1](./image/pendigit_barchart.png)
+
+### Incrimination chart2 (six datasets)
+
+![Cluster1](./image/datasets_incrimination.png)
