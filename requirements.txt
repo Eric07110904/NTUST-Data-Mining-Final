@@ -7,3 +7,5 @@ networkx
 scikit-learn
 scipy
 numpy
+matplotlib
+seaborn
